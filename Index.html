@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fun Website</title>
+
+<style>
+body {
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: pink;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Header */
+h1 {
+    margin-bottom: 40px;
+}
+
+/* Buttons container */
+.btn-container {
+    display: flex;
+    gap: 30px;
+}
+
+/* Buttons */
+button {
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+#runBtn {
+    background: #ff4d6d;
+    color: white;
+}
+
+#pageBtn {
+    background: #d63384;
+    color: white;
+}
+
+/* Floating hearts */
+.heart {
+    position: absolute;
+    bottom: -20px;
+    font-size: 24px;
+    animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-110vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<h1>Faiqa !! Will You Be My Valentine 💖 ?</h1>
+
+<div class="btn-container">
+    <button id="runBtn">No</button>
+    <button id="pageBtn" onclick="goToPage2()">Yes</button>
+</div>
+<footer class="site-footer">
+        <p>Reject ME, if you can !!.</p>
+</footer>
+
+<script>
+const runBtn = document.getElementById("runBtn");
+const pageBtn = document.getElementById("pageBtn");
+
+const messages = [
+    "Baby ?? I Love You 😏",
+    "Aree !! 😜",
+    "Please maan jao yrr 😂",
+    "I Love You Baby 🙈",
+    "Karte raho try 😆",
+    "You can't!",
+    "Kyu Bhayii ? 😝"
+];
+
+let size = 1;
+let isFloating = false;
+
+/* Runaway logic */
+runBtn.addEventListener("mouseover", () => {
+
+    const rect = runBtn.getBoundingClientRect();
+
+    // On first hover → lock position
+    if (!isFloating) {
+        runBtn.style.position = "fixed";
+        runBtn.style.left = rect.left + "px";
+        runBtn.style.top = rect.top + "px";
+        isFloating = true;
+    }
+
+    const btnW = runBtn.offsetWidth;
+    const btnH = runBtn.offsetHeight;
+
+    const maxX = window.innerWidth - btnW - 20;
+    const maxY = window.innerHeight - btnH - 20;
+
+    const newX = Math.random() * maxX;
+    const newY = Math.random() * maxY;
+
+    runBtn.style.left = newX + "px";
+    runBtn.style.top = newY + "px";
+
+    // Change message
+    runBtn.innerText =
+        messages[Math.floor(Math.random() * messages.length)];
+
+    // Grow Page 2 button
+    size += 0.1;
+    pageBtn.style.transform = `scale(${size})`;
+});
+
+/* Navigation */
+function goToPage2() {
+    window.location.href = "page2.html";
+}
+
+/* Floating hearts */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "💖";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (4 + Math.random()*4) + "s";
+
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 7000);
+}
+
+setInterval(createHeart, 400);
+</script>
+
+</body>
+</html>
